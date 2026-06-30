@@ -1,7 +1,7 @@
 import { db } from "@/db";
 import { TypeUser } from "@/types/type.user";
 
-export async function createUserInDB(newUser: TypeUser) {
+export async function createUserInDB(newUser: any) {
     try {
         await db.query(
             "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
