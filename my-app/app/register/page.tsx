@@ -1,7 +1,12 @@
+'use client'
+
 import { registerAction } from "@/action/authAction";
+import { useActionState } from 'react';
 import Link from "next/link";
 
 export default function RegisterPage() {
+    const [state, action] = useActionState(registerAction, null);
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-slate-50 p-6">
             <div className="w-full max-w-sm">
@@ -11,10 +16,17 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                    <form action={registerAction} className="space-y-4">
+
+                    {state?.message && (
+                        <div className={`mb-4 p-3 rounded-lg text-sm text-center ${state.success ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
+                            {state.message}
+                        </div>
+                    )}
+
+                    <form action={action} className="space-y-4">
                         <div>
                             <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Full Name</label>
-                            <input name="name" type="text" placeholder="samiksha" required
+                            <input name="username" type="text" placeholder="samiksha" required
                                 className="w-full p-2.5 border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" />
                         </div>
                         <div>

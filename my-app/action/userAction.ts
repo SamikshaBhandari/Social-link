@@ -7,12 +7,13 @@ export async function registerUser(data: FormData) {
     const username = data.get('username')?.toString();
     const email = data.get('email')?.toString();
     const password = data.get('password')?.toString();
+    console.log("Registering user:", { username, email, password });
 
     if (!username || !email || !password) {
         throw new Error('Missing required fields');
     }
 
-    await createUserInDB({ username, email, password } as TypeUser);
+    await createUserInDB({ username, email, password } as any);
     return { success: true, message: 'User registered successfully' };
 }
 
@@ -25,7 +26,7 @@ export async function loginUser(data: FormData) {
             return { success: false, message: 'Missing required fields' };
         }
 
-        const validuser = await getUserByEmail({ email, password });
+        const validuser = await getUserByEmail(email);
 
         if (!validuser) {
             return { success: false, message: 'User not found!' };

@@ -1,7 +1,12 @@
-import { loginAction } from "@/action/authAction";
+'use client'
+
 import Link from "next/link";
+import { loginAction } from "@/action/authAction";
+import { useActionState } from 'react';
 
 export default function LoginPage() {
+    const [state, action] = useActionState(loginAction, null);
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-slate-50 p-6">
             <div className="w-full max-w-sm">
@@ -11,7 +16,14 @@ export default function LoginPage() {
                 </div>
 
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                    <form action={loginAction} className="space-y-4">
+
+                    {state?.message && (
+                        <p className="mb-4 text-sm text-center text-red-600 bg-red-50 p-2 rounded">
+                            {state.message}
+                        </p>
+                    )}
+
+                    <form action={action} className="space-y-4">
                         <div>
                             <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Email</label>
                             <input name="email" type="email" placeholder="samiksha@gmail.com" required
